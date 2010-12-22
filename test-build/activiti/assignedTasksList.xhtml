@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<script type="text/javascript">
+        function setCaretToEnd (e) {
+            var control = $((e.target ? e.target : e.srcElement).id);
+            if (control.createTextRange) {
+                var range = control.createTextRange();
+                range.collapse(false);
+                range.select();
+            }
+            else if (control.setSelectionRange) {
+                control.focus();
+                var length = control.value.length;
+                control.setSelectionRange(length, length);
+            }
+            control.selectionStart = control.selectionEnd = control.value.length;
+        }
+	</script>
+
+	<h:form>
+		<a4j:outputPanel id="assignedTasks">
+			<rich:contextMenu attached="true" attachTo="assignedTasksDataTable"
+				id="assignedTasksDataTableMenu" submitMode="ajax">
+				<rich:menuItem ajaxSingle="true"
+					oncomplete="Richfaces.showModalPanel('processImageModalPanel')"
+					reRender="messages,spinner,processImageModalPanel"
+					value="#{messages['openeye.viewDefinition']}">
+				</rich:menuItem>
+			</rich:contextMenu>
+			<rich:dataTable id="assignedTasksDataTable"
+				rendered="#{not empty assignedTasks}" value="#{assignedTasks}"
+				var="_task" sortMode="single" selectionMode="single" rows="50"
+				rowKeyVar="row" columnClasses="assigned-tasks-data-table-column"
+				headerClass="assigned-tasks-data-table-header"
+				styleClass="assigned-tasks-data-table"
+				footerClass="assigned-tasks-data-table-footer">
+				<rich:column id="description"
+					filterMethod="#{assignedTasksFilter.filterDescription}" width="100%">
+					<f:facet name="header">
+						<h:panelGroup layout="inline">
+							<h:outputText value="Search: " styleClass="label" />
+							<h:inputText value="#{assignedTasksFilter.filterValue}"
+								id="assignedTaskFilterInput"
+								styleClass="assigned-task-filter-input">
+								<a4j:support event="onkeyup" reRender="assignedTasksDataTable"
+									ignoreDupResponses="true" requestDelay="500"
+									oncomplete="setCaretToEnd(event);" />
+							</h:inputText>
+						</h:panelGroup>
+					</f:facet>
+					<div
+						class="#{taskForm.id.equals(_task.id) ? 'selected-data-table-row' : 'assigned-tasks-data-table-row' }">
+					<div class="assigned-task-title-div"><h:outputText
+						styleClass="assigned-task-title"
+						value="#{_task.id} #{_task.name} " /> <h:outputText
+						styleClass="assigned-task-creation-date"
+						value="#{_task.createTime}">
+						<f:convertDateTime type="date" pattern="yyyy-MM-dd" />
+					</h:outputText> <br />
+					</div>
+					<div class="assigned-task-description-div"><h:outputText
+						styleClass="assigned-task-description"
+						value="#{_task.description}" /></div>
+					<a4j:support event="onclick"
+						action="#{completeTaskAction.getTaskForm()}"
+						reRender="messages,spinner,assignedTasks,completeTaskForm">
+						<a4j:actionparam name="taskId"
+							assignTo="#{completeTaskAction.taskId}" value="#{_task.id}" />
+					</a4j:support></div>
+				</rich:column>
+			</rich:dataTable>
+			<rich:datascroller for="assignedTasksDataTable" maxPages="5"
+				renderIfSinglePage="false"
+				styleClass="assigned-task-data-table-scroller" />
+		</a4j:outputPanel>
+	</h:form>
+</ui:composition>

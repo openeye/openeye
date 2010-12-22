@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="preferencesFormModalPanel"
+		domElementAttachment="form" resizeable="false" autosized="true"
+		zindex="2000" minWidth="355">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="#{messages['openeye.preferences']}" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hidePreferencesFormModalPanel"
+					value="/img/close.gif" styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="preferencesFormModalPanel"
+					attachTo="hidePreferencesFormModalPanel" operation="hide"
+					event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="preferencesForm" ajaxSubmit="true"
+			reRender="messages,preferencesForm"
+			oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('preferencesFormModalPanel')}.hide()">
+			<div class="form-div"><span class="form-fields"> <s:decorate
+				id="userNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.username']}:</ui:define>
+				<h:inputText value="#{currentUser.userName}" enabled="false" />
+			</s:decorate> <s:decorate id="firstNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.firstName']}:</ui:define>
+				<h:inputText label="#{messages['messages.firstName']}"
+					id="firstName" required="false" value="#{currentUser.firstName}"
+					maxlength="30">
+					<f:validateLength minimum="1" maximum="30" />
+					<rich:beanValidator />
+				</h:inputText>
+			</s:decorate> <s:decorate id="middleNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.middleName']}:</ui:define>
+				<h:inputText label="#{messages['messages.middleName']}"
+					id="middleName" required="false" value="#{currentUser.middleName}"
+					maxlength="30">
+					<f:validateLength minimum="0" maximum="30" />
+					<rich:beanValidator />
+				</h:inputText>
+			</s:decorate> <s:decorate id="lastNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.lastName']}:</ui:define>
+				<h:inputText label="#{messages['messages.lastName']}" id="lastName"
+					required="false" value="#{currentUser.lastName}" maxlength="30">
+					<f:validateLength minimum="1" maximum="30" />
+					<rich:beanValidator />
+				</h:inputText>
+			</s:decorate> <s:decorate id="emailField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_email']}:</ui:define>
+				<h:inputText label="#{messages['messages.login_email']}" id="email"
+					required="false" value="#{currentUser.email}" maxlength="60">
+					<rich:beanValidator />
+				</h:inputText>
+			</s:decorate> <rich:togglePanel switchType="client" stateOrder="closed,changePswd">
+				<f:facet name="closed">
+					<rich:toggleControl>
+						<h:outputText
+							value="#{messages['messages.prefs_change_password']}" />
+					</rich:toggleControl>
+				</f:facet>
+				<f:facet name="changePswd">
+					<h:panelGrid columns="1" cellspacing="0" cellpadding="0"
+						style="width:100%;">
+						<s:decorate id="passwordField" template="/layout/edit.xhtml">
+							<ui:define name="label">#{messages['messages.login_password']}:</ui:define>
+							<h:inputSecret required="false"
+								value="#{passwordSupport.password}" maxlength="12">
+								<f:validateLength minimum="8" maximum="12" />
+								<rich:beanValidator
+									summary="#{messages['messages.std_pass_err_msg']}" />
+							</h:inputSecret>
+						</s:decorate>
+						<s:decorate id="confirmPasswordField"
+							template="/layout/edit.xhtml">
+							<ui:define name="label">Confirm</ui:define>
+							<h:inputSecret required="false"
+								value="#{passwordSupport.passwordConfirm}" maxlength="12">
+							</h:inputSecret>
+						</s:decorate>
+					</h:panelGrid>
+				</f:facet>
+			</rich:togglePanel></span>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<a4j:commandButton id="registerButton" value="Save"
+				action="#{updatePreferences.savePreferences()}"
+				reRender="menuToolBarUserId,messages,preferencesForm" /> <a4j:commandButton
+				value="Close"
+				oncomplete="#{rich:component('preferencesFormModalPanel')}.hide()"
+				reRender="messages,pageContent,preferencesForm" /></div>
+		</a4j:form>
+	</rich:modalPanel>
+</ui:composition>

@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../layout/template.xhtml">
+
+	<ui:param name="page" value="menuApplicationSettings" />
+	<ui:param name="pageTitle" value="Application Settings" />
+
+	<ui:define name="toolbarButtons">
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<div class="application-settings-div">
+
+			<div class="form-div"><span class="form-fields"> <s:decorate
+				template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.userLogin']}:</ui:define>
+				<h:selectOneMenu value="#{settings.userLogin}" required="true">
+					<f:selectItem itemLabel="Enabled" itemValue="true" />
+					<f:selectItem itemLabel="Disabled" itemValue="false" />
+				</h:selectOneMenu>
+			</s:decorate> <s:decorate template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.userRegistration']}:</ui:define>
+				<h:selectOneMenu value="#{settings.userRegistration}"
+					required="true">
+					<f:selectItem itemLabel="Enabled" itemValue="true" />
+					<f:selectItem itemLabel="Disabled" itemValue="false" />
+				</h:selectOneMenu>
+			</s:decorate> <s:decorate template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.mailConfirmation']}:</ui:define>
+				<h:selectOneMenu value="#{settings.mailConfirmation}"
+					required="true">
+					<f:selectItem itemLabel="Enabled" itemValue="true" />
+					<f:selectItem itemLabel="Disabled" itemValue="false" />
+				</h:selectOneMenu>
+			</s:decorate> <s:decorate template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.welcomeMessage']}:</ui:define>
+				<h:inputTextarea value="#{settings.welcomeMessage}" />
+			</s:decorate> </span> <a4j:commandButton value="#{messages['openeye.save']}"
+				action="#{applicationSettingsAction.saveSettings}"
+				reRender="messages,pageContent" /></div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

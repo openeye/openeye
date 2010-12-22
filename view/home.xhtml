@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="layout/loginTemplate.xhtml">
+
+	<ui:define name="body">
+
+		<div id="login-panel-outer-div">
+   
+		<div id="login-panel-company-logo-div"><h:graphicImage
+			value="/img/company-logo-text-white.png" height="40px" 
+			styleClass="login-company-logo-text" />
+			<h:graphicImage 
+			value="/img/company-logo-image-white.png" height="35px" 
+			styleClass="login-company-logo-image" /></div>
+
+		<div id="login-panel-inner-div"><h:form>
+			<div class="form-div"><span class="form-fields"> <s:decorate
+				template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.user']}:</ui:define>
+				<h:inputText id="username" value="#{credentials.username}"
+					required="true" maxlength="12" />
+			</s:decorate> <s:decorate template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.password']}:</ui:define>
+				<h:inputSecret id="password" value="#{credentials.password}"
+					required="true" maxlength="12" />
+			</s:decorate> </span>
+
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+
+			<h:commandButton id="submit" type="button"
+				value="#{messages['openeye.login']}" action="#{identity.login}"
+				disabled="#{not settings.userLogin}" />
+
+			<div class="form-text-message-bottom"><h:outputText
+				value="Note - #{settings.welcomeMessage}" /></div>
+			</div>
+		</h:form></div>
+		<div id="login-links"><h:outputLink value="#" id="registerLink"
+			rendered="#{settings.userRegistration}">
+			<h:outputText value="#{messages['messages.register']}" />
+			<rich:componentControl for="registerPanel" attachTo="registerLink"
+				operation="show" event="onclick" />
+		</h:outputLink> <h:outputLink value="#" id="forgotLink"
+			rendered="#{settings.mailConfirmation}">
+			<h:outputText value="#{messages['messages.login_forgot_password']}" />
+			<rich:componentControl for="forgotPanel" attachTo="forgotLink"
+				operation="show" event="onclick" />
+		</h:outputLink></div>
+		</div>
+		
+	</ui:define>
+</ui:composition>
+

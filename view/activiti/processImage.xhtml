@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="processImageModalPanel" 
+		domElementAttachment="body" resizeable="false" autosized="true"
+		zindex="2000">
+		<f:facet name="header">
+			<h:panelGroup> 
+				<h:outputText value="#{taskForm.name}: #{taskForm.deploymentId}" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hideProcessImageModalPanel" 
+					value="/img/close.gif" styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="processImageModalPanel"
+					attachTo="hideProcessImageModalPanel" operation="hide"
+					event="onclick" reRender="pageContent" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="processImage" ajaxSubmit="true">
+			<h:graphicImage rendered="#{not empty taskForm}"
+				url="/seam/resource/processImage/#{taskForm.deploymentId}.jpg"
+				style="process-image-modal-panel" />
+		</a4j:form>
+	</rich:modalPanel>
+
+</ui:composition>

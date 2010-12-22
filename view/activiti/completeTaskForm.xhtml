@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<a4j:form ajaxSingle="true" ajaxSubmit="true">
+		<a4j:outputPanel id="completeTaskForm">
+			<rich:toolBar id="taskFormToolBar" styleClass="task-toolbar"
+				height="26">
+				<rich:toolBarGroup location="left">
+					<h:outputText value="#{taskForm.name}"
+						rendered="#{not empty taskForm}" styleClass="task-toolbar-title" />
+				</rich:toolBarGroup>
+				<rich:toolBarGroup location="right" rendered="#{not empty taskForm}"
+					styleClass="task-toolbar-group">
+				</rich:toolBarGroup>
+			</rich:toolBar>
+			<h:panelGroup class="task-form-outer-div"
+				rendered="#{not empty taskForm}">
+				<ui:param name="var" value="#{taskForm.variables}" />
+				<div class="task-form-inner-div task-form"><activiti:includeTaskForm
+					formId="#{taskForm.id}" form="#{taskForm.form}" /></div>
+				<div class="task-form-buttons-div task-form">
+				<div class="form-error-message"><rich:messages
+					id="taskFormMessages" level="ERROR" globalOnly="false"
+					styleClass="message" infoClass="infomsg" errorClass="errormsg" /></div>
+				<a4j:commandButton action="#{completeTaskAction.complete()}"
+					value="Complete"
+					reRender="messages,taskFormMessages,spinner,taskCounters,completeTaskForm,assignedTasks,unassignedTasks" />
+				<a4j:commandButton id="saveTask"
+					action="#{completeTaskAction.save()}" value="Save"
+					reRender="messages,taskFormMessages,spinner,completeTaskForm" /></div>
+			</h:panelGroup>
+			<h:panelGrid id="taskPanelMessage" rendered="#{empty taskForm}"
+				styleClass="task-not-selected-background">
+				<h:outputText value="(No task selected)" />
+			</h:panelGrid>
+		</a4j:outputPanel>
+	</a4j:form>
+</ui:composition>

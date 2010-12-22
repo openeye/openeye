@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<h:form>
+		<div id="menu-div"><span id="menu-header"> <span
+			class="menu-header-item-left"><h:graphicImage
+			value="/img/company-logo-text-white.png" height="22px"
+			styleClass="menu-company-logo-text" /> <h:graphicImage
+			value="/img/company-logo-image-white.png" height="20px" styleClass="menu-company-logo-image" />
+		</span> <span class="menu-header-item-right"><h:outputText
+			id="menuToolBarUserId"
+			value="#{currentUser.firstName} #{currentUser.lastName}" /> <a4j:commandLink
+			id="menuToolBarPref" value="#{messages['openeye.preferences']}"
+			action="#{updatePreferences.beginEditPreferences(currentUser.userId)}"
+			reRender="preferencesFormModalPanel,preferencesForm"
+			oncomplete="Richfaces.showModalPanel('preferencesFormModalPanel')" />
+		<s:link id="menuToolBarLogout" view="/home.xhtml"
+			action="#{identity.logout}" value="#{messages['openeye.logout']}"
+			propagation="none" styleClass="menu-header-logout" /> </span> </span> <span
+			id="menu-tabs"> <span class="menu-tab-item-left"> <s:link
+			id="menuTasks" rendered="#{identity.loggedIn}"
+			view="/activiti/tasks.xhtml" propagation="none"
+			styleClass="menu-tab">
+			<h:outputText id="menuTasksLabel" value="Tasks" />
+		</s:link> <s:link id="menuProcessDefitions" rendered="#{s:hasRole('admin')}"
+			view="/activiti/processDefinitions.xhtml"
+			value="#{messages['openeye.definitions']}" propagation="none"
+			styleClass="menu-tab" /> <s:link id="menuUserAdministration"
+			rendered="#{s:hasRole('admin')}"
+			view="/admin/userAdministration.xhtml"
+			value="#{messages['openeye.users']}" propagation="none"
+			styleClass="menu-tab" /> <s:link id="menuRoleAdministration"
+			rendered="#{s:hasRole('admin')}"
+			view="/admin/roleAdministration.xhtml"
+			value="#{messages['openeye.roles']}" propagation="none"
+			styleClass="menu-tab" /> <s:link id="menuApplicationSettings"
+			rendered="#{s:hasRole('admin')}"
+			view="/admin/applicationSettings.xhtml"
+			value="#{messages['openeye.settings']}" propagation="none"
+			styleClass="menu-tab" /> <rich:jQuery selector="##{page}"
+			query="addClass('current')" /> </span> </span> <rich:toolBar id="menu-toolbar"
+			styleClass="menu-toolbar" height="20">
+			<rich:toolBarGroup id="menuToolbar" itemSeparator="None" location="left"
+				styleClass="menu-toolbar-item-left">
+					<ui:insert name="toolbarButtons" />
+			</rich:toolBarGroup>
+			<rich:toolBarGroup location="right"
+				styleClass="menu-toolbar-item-right">
+				<a4j:status id="spinner">
+					<f:facet name="start">
+						<h:graphicImage value="/img/spinner.gif" />
+					</f:facet>
+				</a4j:status>
+			</rich:toolBarGroup>
+			<rich:toolBarGroup location="right">
+				<rich:messages id="messages" globalOnly="true" styleClass="message"
+					errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+					rendered="#{showGlobalMessages != 'false'}">
+				</rich:messages>
+			</rich:toolBarGroup>
+		</rich:toolBar></div>
+	</h:form>
+
+	<ui:include src="../activiti/startForm.xhtml" />
+	<ui:include src="../preferences/preferencesForm.xhtml" />
+</ui:composition>

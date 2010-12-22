@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="createRoleDetailsModalPanel"
+		domElementAttachment="form" resizeable="false" autosized="true"
+		zindex="2000" minWidth="355">
+		<f:facet name="header">
+			<h:panelGroup>asda
+				<h:outputText value="Create Role" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hideCreateRoleDetailsModalPanel"
+					value="/img/close.gif" styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="createRoleDetailsModalPanel"
+					attachTo="hideCreateRoleDetailsModalPanel" operation="hide"
+					event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="createRoleDetails"
+			reRender="messages,createRoleDetailsModalPanel,roleDetails"
+			oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('createRoleDetailsModalPanel')}.hide()">
+			<div class="form-div">
+			<div class="form-fields"><s:decorate id="roleField"
+				template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.role']}:</ui:define>
+				<h:inputText id="role" value="#{customRoleAction.role}"
+					required="true"
+					readonly="#{identityManager.userExists(customRoleAction.role)}" />
+			</s:decorate> <s:decorate id="groupsField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.memberOfGroups']}:</ui:define>
+				<div class="selectMany"><h:selectManyCheckbox id="groups"
+					value="#{customRoleAction.groups}" layout="pageDirection"
+					styleClass="roles" style="white-space:nowrap;">
+					<s:selectItems value="#{customRoleAction.assignableRoles}"
+						var="_role" label="#{_role}" />
+				</h:selectManyCheckbox></div>
+			</s:decorate></div>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<a4j:commandButton id="save"
+				value="#{messages['openeye.createRole']}"
+				action="#{customRoleAction.save}"
+				reRender="messages,createRoleDetails,rolesDataTable" /> <h:commandButton
+				onclick="#{rich:component('createRoleDetailsModalPanel')}.hide()"
+				value="#{messages['openeye.close']}"
+				reRender="pageContent,createRoleDetails">
+				<s:conversationPropagation type="end" />
+			</h:commandButton></div>
+		</a4j:form>
+	</rich:modalPanel>
+</ui:composition>

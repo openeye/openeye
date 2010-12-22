@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<h:form>
+		<a4j:outputPanel id="unassignedTasks">
+			<rich:contextMenu id="unassignedTasksContextMenu" attached="true"
+				attachTo="unassignedTasksDataTable" submitMode="server">
+				<rich:menuItem ajaxSingle="true"
+					action="#{claimTaskAction.confirm()}"
+					reRender="messages,spinner,taskCounters,unassignedTasks,assignedTasks">
+					<h:outputText value="Claim Task" />
+				</rich:menuItem>
+			</rich:contextMenu>
+			<rich:dataTable id="unassignedTasksDataTable"
+				rendered="#{not empty unassignedTasks}" value="#{unassignedTasks}"
+				var="_unassignedTask" groupingColumn="definitionName"
+				sortMode="multi" selectionMode="single" rows="50" rowKeyVar="row"
+				columnClasses="assigned-tasks-data-table-column"
+				headerClass="assigned-tasks-data-table-header"
+				styleClass="unassigned-tasks-data-table"
+				footerClass="assigned-tasks-data-table-footer">
+				<rich:column id="definitionName" label="Definition"
+					sortBy="#{_unassignedTask.id}" sortOrder="ASCENDING"
+					visible="false">
+					<h:outputText value="#{_unassignedTask.id}" />
+				</rich:column>
+				<rich:column id="definitionDescription" label="Description"
+					filterMethod="#{unassignedTasksFilter.filterDefinitionId}"
+					width="100%">
+					<f:facet name="header">
+						<h:panelGroup layout="inline">
+							<h:outputText value="Filter by: " styleClass="label" />
+							<h:selectOneMenu value="#{unassignedTasksFilter.filterValue}">
+								<f:selectItem itemValue="" itemLabel="" />
+								<c:forEach items="#{processDefinitions}" var="definition">
+									<f:selectItem itemValue="#{definition.id}"
+										itemLabel="#{definition.id}" />
+								</c:forEach>
+								<a4j:support event="onchange"
+									reRender="unassignedTasksDataTable" />
+							</h:selectOneMenu>
+						</h:panelGroup>
+					</f:facet>
+
+					<div
+						class="#{claimTaskAction.taskId.equals(_unassignedTask.id) ? 'selected-data-table-row' : 'assigned-tasks-data-table-row' }">
+					<div class="assigned-task-title-div"><h:outputText
+						styleClass="assigned-task-title"
+						value="#{_unassignedTask.id} #{_unassignedTask.name} " /> <h:outputText
+						styleClass="assigned-task-creation-date"
+						value="#{_unassignedTask.createTime}">
+						<f:convertDateTime type="date" pattern="yyyy-MM-dd" />
+					</h:outputText> <br />
+					</div>
+					<div class="assigned-task-description-div"><h:outputText
+						styleClass="assigned-task-description"
+						value="#{_unassignedTask.description}" /></div>
+					<a4j:support event="onclick"
+						reRender="messages,spinner,unassignedTasks">
+						<a4j:actionparam name="unassignedTask"
+							assignTo="#{claimTaskAction.taskId}"
+							value="#{_unassignedTask.id}" />
+					</a4j:support></div>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:outputPanel>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../layout/tasksTemplate.xhtml">
+
+	<ui:param name="page" value="menuTasks" />
+	<ui:param name="pageTitle" value="Tasks" />
+
+	<ui:define name="toolbarButtons">
+		<h:panelGrid id="toolBarStartProcessButton" cellpadding="0"
+			cellspacing="0" columns="2">
+			<h:graphicImage value="/img/plus.png" height="13" />
+			<a4j:commandLink value="#{messages['openeye.new']}" />
+			<rich:componentControl event="onclick" for="toolBarStartProcessMenu"
+				operation="show" />
+			<rich:contextMenu id="toolBarStartProcessMenu" attached="true"
+				attachTo="toolBarStartProcessButton" submitMode="ajax"
+				itemClass="menu-start-process-context-menu">
+				<c:forEach items="#{processDefinitions}" var="definition">
+					<rich:menuItem ajaxSingle="true"
+						value="#{definition.name} (v#{definition.version})"
+						action="#{startProcessAction.getStartProcessForm()}"
+						reRender="menu-toolbar,startFormModalPanel"
+						oncomplete="Richfaces.showModalPanel('startFormModalPanel')"
+						styleClass="menu-start-process-context-menu-item">
+						<a4j:actionparam name="taskId"
+							assignTo="#{startProcessAction.processDefinitionId}"
+							value="#{definition.id}" />
+					</rich:menuItem>
+				</c:forEach>
+			</rich:contextMenu>
+		</h:panelGrid>
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="2">
+			<h:graphicImage value="/img/refresh.png" height="12" />
+			<s:link id="refreshTasksList" value="Refresh"
+				action="#{refreshTaskListAction.refreshAll()}"
+				view="/activiti/tasks.xhtml" reRender="messages,spinner"
+				propagation="none" />
+		</h:panelGrid>
+	</ui:define>
+
+	<ui:define name="assignedTasks">
+		<ui:include src="../activiti/assignedTasksList.xhtml" />
+		<ui:include src="../activiti/processImage.xhtml" />
+	</ui:define>
+
+	<ui:define name="completeTaskForm">
+		<ui:include src="../activiti/completeTaskForm.xhtml" />
+	</ui:define>
+
+	<ui:define name="unassignedTasks">
+		<ui:include src="../activiti/unassignedTasksList.xhtml" />
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="createDeploymentModalPanel"
+		domElementAttachment="form" resizeable="false" autosized="true"
+		zindex="2000" minWidth="300" minHeight="100">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Create Deployment"></h:outputText>
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hideCreateDeploymentModalPanel"
+					value="/img/close.gif" styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="createDeploymentModalPanel"
+					attachTo="hideCreateDeploymentModalPanel" operation="hide"
+					event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<h:form id="createDeploymentOutputPanel" enctype="multipart/form-data">
+			<div class="form-div"><span class="form-fields"><h:messages
+				level="ALL" globalOnly="true" styleClass="message"
+				infoClass="infomsg" errorClass="errormsg" /> <ui:define
+				name="label">Business Archive</ui:define> <s:fileUpload
+				id="processDefinitionZipFile" data="#{createDeploymentAction.data}"
+				contentType="#{createDeploymentAction.contentType}"
+				fileName="#{createDeploymentAction.fileName}"
+				fileSize="#{createDeploymentAction.size}" required="true">
+			</s:fileUpload></span>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<h:commandButton id="createDeploymentButton" value="Create"
+				action="#{createDeploymentAction.confirm()}"
+				reRender="toolBarStartProcessMenu,createDeploymentOutputPanel" /> <h:commandButton
+				value="Cancel" action="#{createDeploymentAction.cancel()}"
+				onclick="#{rich:component('createDeploymentModalPanel')}.hide()"
+				reRender="toolBarStartProcessMenu,pageContent" /></div>
+			<a4j:support event="oncomplete"
+				reRender="toolBarStartProcessMenu,pageContent"
+				oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('createDeploymentModalPanel')}.hide()" />
+		</h:form>
+	</rich:modalPanel>
+</ui:composition>

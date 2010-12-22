@@ -1,0 +1,797 @@
+/*
+ * Created by Open Eye Development Team, Open Eye Community and individual 
+ * contributors
+ */ /* Body begin */
+body { /*
+	font-style: normal;
+	font-size: 12px;
+	margin: 0px;
+	*/
+	color: #333333;
+	direction: ltr; 
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height:120%;
+	text-align: left;
+}
+
+/* Body end */ /* Input begin */
+input {
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	padding: 2px;
+	margin: 0px;
+}
+
+button[type=button],button[type=reset],button[type=submit],input[type=reset],input[type=submit],input[type=button]
+	{
+	color: #333333;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-weight: bold;
+}
+
+.a {
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+/* Input end */ /* Body end */ /* Login page begin */
+.login-background {
+	background-color: #000; 
+	background-image: url("../img/login-bg-gradient-blue.png");
+	background-position: left top;
+	background-repeat: repeat-x;	
+}
+
+#login-panel-company-logo-div {
+	background-color: transparent;
+	padding-bottom: 5px;
+	padding-left: 0px;
+	width: 350px;
+}
+
+.login-company-logo-text {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 5px;
+	padding-top: 2px; 
+}
+
+.login-company-logo-image {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 5px;
+	padding-bottom: 3px; 
+}
+
+#login-panel-outer-div {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	width: 23em;
+	margin-top: -9em; /*set to a negative number 1/2 of your height*/
+	margin-left: -14em; /*set to a negative number 1/2 of your width*/
+}
+
+#login-panel-inner-div {
+	background-color: #e5e5e5;
+	border: 1px solid #c0c0c0;
+	height: 100%;
+	margin: 0px;
+	padding-bottom: 20px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 20px;
+	width: 100%;
+}
+
+#login-links {
+	left: 25%;
+	padding: 5px;
+	position: relative;
+	top: 100%;
+	width: 100%;
+}
+
+#login-links a {
+	color: #f7f7f7 !important;
+	font-weight: bold;
+	margin: 10px;
+}
+
+/* Login page end */ /* Error messages begin */
+.error {
+	float: left;
+	padding: 5px;
+}
+
+.errors {
+	color: #FF0000;
+}
+
+img.errors {
+	padding-right: 5px;
+}
+
+.errors input,.errors textarea,.errors select {
+	border: 1px solid red;
+}
+
+.message {
+	border: 0;
+	background: none;
+	font-weight: bold;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	padding-right: 5px;
+}
+
+.message li {
+	background: no-repeat left center;
+	padding-top: 0px;
+	padding-left: 20px;
+	margin-left: 3px;
+}
+
+.message li.infomsg {
+	background-image: url("../img/msginfo.png");
+}
+
+.message li.errormsg {
+	background-image: url("../img/msgerror.png");
+	color: #FF0000;
+}
+
+.message li.warnmsg {
+	background-image: url("../img/msgwarn.png");
+}
+
+/* Error messages end */ /* Forms begin */
+.form-div {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.form-fields {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.form-fields input[type=text],.form-fields input[type=textarea],.form-fields input[type=select],.form-fields input[type=password],.form-fields input[type=checkbox],.form-fields textarea,.form-fields select,.form-fields input[type=radio]
+	{
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 0px;
+}
+
+.form-fields input[type=text],.form-fields input[type=textarea],.form-fields input[type=password],.form-fields textarea
+	{
+	width: 100%;
+}
+
+.form-text-message-top {
+	color: #555555;
+	font-style: oblique;
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 0px;
+}
+
+.form-text-message-bottom {
+	color: #555555;
+	font-style: oblique;
+	margin: 0px;
+	margin-top: 10px;
+	padding: 0px;
+}
+
+.form-text-message {
+	color: #555555;
+	font-style: oblique;
+	margin: 0px;
+	padding: 0px;
+}
+
+.form-error-message {
+	color: #FF0000;
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 0px;
+}
+
+/* Forms end */ /* Menu begin */
+#menu-div {
+	border-width: 0px;
+	/* background-color: #36A3DB; */
+	background-color: #36A3DB;
+	background-image: url("../img/menu-bg-gradient-transparent.png"); 
+	background-position: left top;
+	background-repeat: repeat-x;
+	display: block;
+	height: 76px;
+	margin: 0px;
+	min-width: 500px;
+	padding: 0px;
+	width: 100%;
+}
+
+#menu-header {
+	border-width: 0px;
+	border-color: white;
+	border-style: solid;
+	background-color: transparent;
+	color: #ffffff;
+	display: block;
+	font-weight: bold;
+	height: 34px;
+	margin: 0px;
+	min-width: 500px;
+	padding: 0px;
+	position: relative;
+}
+
+.menu-header-item-left {
+	height: 0%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.menu-header-item-right {
+	float: right;
+	height: 0%;
+	margin: 0px;
+	padding: 0px;
+}
+
+#menu-header a {
+	background: #000000;
+	color: #ffffff;
+	font-weight: bold;
+	margin-left: 3px;
+	padding-bottom: 2px;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-decoration: none;
+}
+
+.menu-company-logo-text {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 3px;
+	padding-top: 2px; 
+}
+
+.menu-company-logo-image {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 3px;
+	padding-bottom: 2px; 
+}
+
+
+.menu-header-logout {
+	background: #F48211 !important;	
+	font-weight: bold;
+	padding-bottom: 2px;	
+}
+
+#menu-tabs {
+	border-width: 0px;
+	background-color: transparent;
+	color: #ffffff;
+	display: block;
+	height: 17px;
+	margin: 0px;
+	min-width: 500px;
+	padding-bottom: 2px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 2px;
+	position: relative;
+	width: 100%;
+}
+
+.menu-tab-item-left {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+
+.menu-tab-item-right {
+	display: inline;
+	float: right;
+	margin: 0px;
+	margin-right: 10px;
+	padding: 0px;
+}
+
+#menu-tabs a {
+	background: #000000;
+	color: #f7f7f7;
+	font-size: 1em;
+	font-weight: bold;
+	margin-right: 3px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 4px;
+	text-decoration: none;
+	width: 100px;
+}
+
+.current {
+	background: #f5f5f5 !important;
+	color: #333 !important;
+	padding-bottom: 7px !important;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 4px;
+	margin: 0px;
+	width: 100px;
+}
+
+.menu-toolbar,.menu-toolbar rich-toolbar {
+	background: #f5f5f5 !important;
+	border-width: 0px;
+	border-bottom-width: 0px;
+	border-bottom-color: #f5f5f5;
+	color: #333 !important;
+	height: 25px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.menu-toolbar-item-left,.menu-toolbar-item-left rich-toolbar-item {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 5px;
+	padding-right: 15px;
+}
+
+.menu-toolbar-item-left a {
+	color: #333333;
+	direction: ltr;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	text-align: left;
+	font-weight: bold;
+	font-size: 1em;
+	margin-left: 3px;
+	margin-right: 0px;
+	padding: 0px;
+	text-decoration: none;
+}
+
+.menu-toolbar-item-right {
+	color: #333333;
+	font-weight: bold;
+	font-size: 1.1em;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.spinner {
+	margin: 0px;
+	padding: 0px;
+	padding-right: 5px; 
+}
+
+.menu-start-process-context-menu {
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+.menu-start-process-context-menu-item {
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+/* Menu end */ /* Task toolbar begin */
+.task-toolbar,.task-toolbar rich-toolbar {
+	background: #ddd;
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.task-toolbar-group,.task-toolbar-group rich-toolbar {
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 1px;
+	padding-right: 0px;
+}
+
+.task-toolbar-title {
+	color: #333;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 1em;
+	padding-left: 0px;
+	padding-right: 5px;
+}
+
+.task-not-selected-background {
+	align: center;
+	background-image: url("../img/company-logo-image-bg.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	color: #ccc;
+	font-size: 1em;
+	font-weight: bold;
+	height: 300px;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	width: 100%;
+}
+
+.task-form-outer-div {
+	display: block;
+	width: 100%;
+}
+
+.task-form-inner-div {
+	display: block;
+	margin: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.task-form-buttons-div {
+	display: block;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.task-form {
+	color: #333333;
+	height: auto;
+	height: 100%;
+	min-height: 100%;
+	width: 400px;
+}
+
+.task-form input[type=text],.task-form textarea[type=textarea],.task-form input[type=password],.task-form textarea
+	{
+	padding-left: 1px;
+	width: 90%;
+}
+
+/* Task toolbar end */ /* Assigned tasks data table begin */
+.assigned-tasks-bg {
+	background-color: #f3f3f3;
+	color: #ffffff;
+/*	background-image: url("../img/login-bg.png");
+	background-position: left top;
+	background-repeat: repeat-x; */
+}
+
+.assigned-tasks-left-column {
+	margin: 0px;
+	padding: 0px;
+}
+
+.assigned-tasks-right-column {
+	margin: 0px;
+	padding: 0px;
+	padding-left: 8px;
+}
+
+.assigned-task-toolbar-title {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.assigned-task-filter-input {
+	width: 100%;
+}
+
+.assigned-tasks-data-table {
+	background-color: #ffffff;
+	border-width: 0px;
+	font-size: 1em;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.assigned-tasks-data-table-header {
+	background-color: #f8f8f8;
+	border-color: #ddd;
+	border-width: 0px !important;
+	color: #333;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 1em;
+	layout: inline;
+	margin: 0px;
+	padding-bottom: 4px;
+	padding-right: 65px;
+	padding-left: 5px;
+	padding-top: 5px;	
+	width: 100%;
+}
+
+.rich-table-thead {
+	border-bottom-width: 0px !important;
+}
+
+.assigned-tasks-data-table-footer {
+	background-color: #ffffff;
+	border-color: #f1f1f1;
+	border-style: solid;
+	border-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 2px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.assigned-tasks-data-table-column {
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 1em;
+}
+
+.assigned-tasks-data-table-row {
+	background-color: #ffffff;
+	border-color: #f5f5f5;
+	border-style: solid;
+	border-width: 0px;
+	border-top-width: 1px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.selected-data-table-row {
+	background-color: #FFECB5;
+	border-color: #f5f5f5;
+	border-style: solid;
+	border-width: 0px;
+	border-top-width: 1px;
+	color: #000000;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.assigned-task-title-div {
+	font-weight: bold;
+	padding-bottom: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+}
+
+.assigned-task-title {
+	color: #333333;
+}
+
+.assigned-task-creation-date {
+	color: #6f6f6f;
+	float:right;
+}
+
+.assigned-task-description-div {
+	color: #6f6f6f;
+	padding-bottom: 5px;
+	padding-left: 30px;
+	padding-right: 0px;
+	padding-top: 1px;
+}
+
+.assigned-task-description {
+	color: #6f6f6f;
+}
+
+.assigned-task-data-table-scroller {
+	background-color: #ffffff;
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 5px;
+	padding-top: 4px;
+	width: 100%;
+	margin: 0px;
+}
+
+/* Assigned tasks data table end */
+
+/* Unassigned tasks data table begin */
+
+.unassigned-tasks-data-table {
+	border-width: 0px;
+	font-size: 1em;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.unassigned-tasks-data-table-row {
+	border-color: #f5f5f5;
+	border-style: solid;
+	border-width: 0px;
+	border-top-width: 1px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.unassigned-tasks-active-row {
+	background-color: #FFECB5;
+	border-color: #f5f5f5;
+	color: #000000;
+}
+
+/* Unassigned tasks data table end */
+
+ /* Footer begin */
+.footer {
+	background-color: #ddd; 
+	color: #333;
+	font-size: 0.9em;
+	margin: 0px;
+	padding: 5px;
+	text-align: right;
+}
+
+.footer a {
+	color: #333;
+}
+
+/* Footer end */ /* Data table begin */
+.data-table {
+	border-color: #ffffff;
+	border-style: solid;
+	border-width: 0px;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 1em;
+}
+
+.data-table-header {
+	background-color: #f5f5f5;
+	border-color: #ffffff;
+	border-style: solid;
+	border-width: 2px;
+	color: #333333;
+	font-weight: bold;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 1em;
+}
+
+.data-table-column {
+	border-color: #ffffff;	
+	border-width: 0px;
+	font-size: 1em;
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 3px;
+	width: 100%;
+}
+
+.data-table-column a {
+	color: #333;
+}
+
+.data-table-row {
+	border-color: #ffffff;
+	border-bottom-color: #e5e5e5;
+	border-style: solid;
+	border-width: 0px;
+	border-bottom-width: 1px;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+/* Data table end */ /* Application settings begin */
+.application-settings-div {
+	border-width: 0px;
+	margin: 0px;
+	padding: 10px;
+	width: 400px;;
+}
+
+/* Applications settings end */ 
+/* Labels and values begin */
+.required {
+	color: #FF0000;
+}
+
+.label {
+	font-weight: bold;
+	margin: 5px;
+	margin-left: 0px;
+	padding: 0px;
+	text-align: left;
+	width: 100%;
+}
+
+.value {
+	font-weight: normal;
+	margin: 5px;
+	margin-left: 0px;
+	padding: 0px;
+	text-align: left;
+	width: 100%;
+}
+
+.entry {
+	clear: both;
+	padding-top: 10px;
+}
+
+/* Labels and values end */ /* Richface components begin */
+.rich-menu,.rich-menu-list-bg,.rich-menu-list-strut {
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+.rich-inplace-view, .rich-inplace-select-view {
+	white-space: normal !important;
+}
+
+.rich-inplace-edit, .rich-inplace-select-edit {
+	white-space: normal !important;
+}
+
+.rich-inplace-select, .rich-inplace-select-view, input.rich-inplace-select-field, .rich-inplace-select-field {
+}
+
+.extdt-content {
+	background-color: #f2f2f2 !important;
+}
+
+/* Modal panel begin */
+.rich-mpnl-panel,.rich-modalpanel {
+	
+}
+
+.rich-mpnl-body {
+	border-color: #555555;
+	border-width: 1px;
+	font-style: normal;
+	font-size: 1em;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	margin: 20px;
+	padding: 20px;
+	text-align: left;
+}
+
+.rich-mpnl-header,.rich-mpnl-text {
+	background: #000000;
+	border-color: #555555;
+	border-width: 1px;
+	color: #ffffff;
+	font-size: 1em;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	text-align: left;
+}
+
+.rich-mpnl-content {
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+}
+
+.close-modal-panel {
+	margin: 1px;
+	margin-top: 1px;
+	padding: 0px;
+}
+
+.rich-mpnl-shadow {
+	margin-left: -15px;
+	margin-top: -15px;	
+	padding: 11px;
+}
+
+/* Modal panel end */
+
+/* Richface components end */

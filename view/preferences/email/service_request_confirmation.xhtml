@@ -1,0 +1,31 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:m="http://jboss.com/products/seam/mail" charset="UTF-8"
+	importance="normal" urlBase="http://localhost:8080">
+	<m:from name="Service Request Confirmation - #{customerService.title}"
+		address="no-reply@your-company.org" />
+	<m:to name="#{customerService.email}">#{customerService.email}</m:to>
+	<m:subject>Service Request Confirmation - #{customerService.title}</m:subject>
+	<m:body>
+		<html>
+		<head>
+		<style type="text/css"> 
+<!-- /* Font Definitions */
+p {
+	font-family: Calibri, Arial, Verdana, sans-serif;
+	font-size: 14px !important;
+}
+-->
+</style>
+		</head>
+		<body>
+		<p>An new Service Request <b>#{customerService.title}</b> has been
+		submitted with the following ticket number: <b>#{customerService.ticket}</b>.</p>
+		<p>The progress of the Service Request can be viewed at <a
+			href="#{customerService.url}">#{customerService.url}</a>. Enter the
+		Ticket Id: <b>#{customerService.ticket}</b> in the search field and
+		click on the search button.</p>
+		<p>Regards from Customer Service Desk at www.your-company.org</p>
+		</body>
+		</html>
+	</m:body>
+</m:message>

@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="createUserModalPanel" domElementAttachment="form"
+		resizeable="false" autosized="true" zindex="2000" minWidth="355">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Create User" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hideCreateUserModalPanel" value="/img/close.gif"
+					styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="createUserModalPanel"
+					attachTo="hideCreateUserModalPanel" operation="hide"
+					event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="createUserForm"
+			reRender="messages,createUserForm,usersDataTable"
+			oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('createUserModalPanel')}.hide()">
+			<div class="form-div">
+			<div class="form-fields"><s:decorate id="userNameField"
+				template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.username']}:</ui:define>
+				<h:inputText id="userName" required="true"
+					value="#{customUserAction.username}" maxlength="12">
+					<a4j:support event="onblur" reRender="userNameField"
+						ajaxSingle="true" />
+				</h:inputText>
+			</s:decorate> <s:decorate id="passwordField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_password']}:</ui:define>
+				<h:inputSecret id="passwordInputField" required="true"
+					value="#{customUserAction.password}" maxlength="12" />
+			</s:decorate> <s:decorate id="passwordConfirmField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_password_confirm']}:</ui:define>
+				<h:inputSecret id="passwordConfirmInputField"
+					value="#{customUserAction.confirm}" required="true" maxlength="12" />
+			</s:decorate> <s:decorate id="emailField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_email']}:</ui:define>
+				<h:inputText id="email" required="true"
+					value="#{customUserAction.email}" maxlength="50" />
+			</s:decorate> <s:decorate id="firstNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.firstName']}:</ui:define>
+				<h:inputText id="firstName" required="true"
+					value="#{customUserAction.firstname}" maxlength="30" />
+			</s:decorate> <s:decorate id="lastNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.lastName']}:</ui:define>
+				<h:inputText id="lastName" required="true"
+					value="#{customUserAction.lastname}" maxlength="30" />
+			</s:decorate></div>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<a4j:commandButton value="#{messages['messages.register']}"
+				action="#{customUserAction.createUser()}"
+				eventsQueue="createUserQueue"
+				reRender="messages,createUserForm,usersDataTable" /> <a4j:commandButton
+				value="#{messages['openeye.close']}"
+				action="#{customUserAction.cancel()}"
+				oncomplete="#{rich:component('createUserModalPanel')}.hide()"
+				reRender="pageContent,createUserForm" conversation="end" /> <a4j:queue
+				name="createUserQueue" requestDelay="0" ignoreDupResponses="false"
+				disabled="false" size="1" sizeExceededBehavior="dropNew" /></div>
+		</a4j:form>
+	</rich:modalPanel>
+</ui:composition>

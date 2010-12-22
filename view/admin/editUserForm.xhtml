@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="userDetailsModalPanel" domElementAttachment="form"
+		resizeable="false" autosized="true" zindex="2000" minWidth="355">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Edit User" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hideUserDetailsModalPanel"
+					value="/img/close.gif" styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="userDetailsModalPanel"
+					attachTo="hideUserDetailsModalPanel" operation="hide"
+					event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="userDetails"
+			reRender="messages,userDetails,usersDataTable"
+			oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('userDetailsModalPanel')}.hide()">
+			<div class="form-div">
+			<div class="form-fields"><ui:remove>
+				<s:decorate id="firstnameField" template="/layout/edit.xhtml">
+					<ui:define name="label">#{messages['openeye.firstName']}:</ui:define>
+					<h:inputText id="firstname" value="#{customUserAction.firstname}" />
+				</s:decorate>
+				<s:decorate id="lastnameField" template="/layout/edit.xhtml">
+					<ui:define name="label">#{messages['openeye.lastName']}:</ui:define>
+					<h:inputText id="lastname" value="#{customUserAction.lastname}" />
+				</s:decorate>
+			</ui:remove> <s:decorate id="usernameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.username']}:</ui:define>
+				<h:inputText id="username" value="#{customUserAction.username}"
+					readonly="#{identityManager.userExists(customUserAction.username)}" />
+			</s:decorate> <s:decorate id="passwordField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.password']}:</ui:define>
+				<h:inputSecret id="password" value="#{customUserAction.password}" />
+			</s:decorate> <s:decorate id="confirmField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.confirmPassword']}:</ui:define>
+				<h:inputSecret id="confirm" value="#{customUserAction.confirm}" />
+			</s:decorate> <s:decorate id="rolesField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.memberOfRoles']}:</ui:define>
+				<div class="selectMany"><h:selectManyCheckbox id="roles"
+					value="#{customUserAction.roles}" layout="pageDirection"
+					styleClass="roles" style="white-space:nowrap;">
+					<s:selectItems value="#{identityManager.listGrantableRoles()}"
+						var="_role" label="#{_role}" />
+				</h:selectManyCheckbox></div>
+			</s:decorate> <s:decorate id="accountEnabled" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.accountEnabled']}</ui:define>
+				<h:selectBooleanCheckbox id="enabled"
+					value="#{customUserAction.enabled}" />
+			</s:decorate></div>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<a4j:commandButton value="#{messages['openeye.save']}"
+				action="#{customUserAction.save}"
+				reRender="messages,userDetails,usersDataTable" />
+			<h:commandButton value="#{messages['openeye.close']}"
+				action="#{customUserAction.cancel}"
+				onclick="#{rich:component('userDetailsModalPanel')}.hide()"
+				reRender="pageContent">
+				<s:conversationPropagation type="end" />
+			</h:commandButton></div>
+		</a4j:form>
+	</rich:modalPanel>
+</ui:composition>

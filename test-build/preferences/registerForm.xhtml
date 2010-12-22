@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="registerPanel" domElementAttachment="form"
+		resizeable="false" autosized="true" zindex="2000" minWidth="355"
+		rendered="#{not identity.loggedIn}"
+		showWhenRendered="#{guest.registerError}">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="#{messages['messages.signup']}" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/close.gif"
+					styleClass="close-modal-panel" id="hidelink">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="registerPanel" attachTo="hidelink"
+					operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="registerForm" ajaxSubmit="true"
+			reRender="regPending,registerPanel"
+			oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('registerPanel')}.hide()">
+			<div class="form-div"><span class="form-fields"> <s:decorate
+				id="userNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['openeye.username']}</ui:define>
+				<h:inputText id="userName" required="true"
+					value="#{guest.registrationScreenName}" maxlength="12">
+					<a4j:support event="onblur" reRender="userNameField"
+						ajaxSingle="true" />
+				</h:inputText>
+			</s:decorate> <s:decorate id="passwordField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_password']}</ui:define>
+				<h:inputSecret id="password" required="true"
+					value="#{passwordSupport.password}" maxlength="12" />
+			</s:decorate> <s:decorate id="passwordConfirmField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_password_confirm']}</ui:define>
+				<h:inputSecret id="passwordConfirm"
+					value="#{passwordSupport.passwordConfirm}" required="true"
+					maxlength="12" />
+			</s:decorate> <s:decorate id="emailField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.login_email']}</ui:define>
+				<h:inputText id="email" required="true" value="#{guest.user.email}"
+					maxlength="50" />
+			</s:decorate> <s:decorate id="firstNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.firstName']}</ui:define>
+				<h:inputText id="firstName" required="true"
+					value="#{guest.user.firstName}" maxlength="30" />
+			</s:decorate> <s:decorate id="lastNameField" template="/layout/edit.xhtml">
+				<ui:define name="label">#{messages['messages.lastName']}</ui:define>
+				<h:inputText id="lastName" required="true"
+					value="#{guest.user.lastName}" maxlength="30" />
+			</s:decorate> <s:decorate id="sendEmailConfirm" template="/layout/edit.xhtml"
+				rendered="#{settings.mailConfirmation}">
+				<ui:define name="label">#{messages['openeye.sendEmailConfirmation']}</ui:define>
+				<h:selectBooleanCheckbox id="sendEmailConfirmCheckbox"
+					value="#{guest.sendEmailConfirmation}" />
+			</s:decorate> <h:panelGroup id="captcha" layout="block">
+				<h:outputText value="#{messages['messages.captcha_label']}" />
+				<s:decorate id="verifyCaptchaField"
+					template="/preferences/captcha.xhtml">
+					<h:graphicImage id="captchaChallenge"
+						value="/seam/resource/captcha" />
+					<h:inputText id="verifyCaptcha" value="#{captcha.response}"
+						required="true" size="3" maxlength="3" />
+				</s:decorate>
+			</h:panelGroup> </span>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<a4j:commandButton type="submit" id="registerButton"
+				value="#{messages['messages.register']}"
+				action="#{guest.doRegister}" /></div>
+		</a4j:form>
+	</rich:modalPanel>
+
+	<rich:modalPanel id="regPending" autosized="true" width="355"
+		resizeable="false" zindex="2000"
+		showWhenRendered="#{inactiveNewUser.userName != null}"
+		rendered="#{not identity.loggedIn}">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="#{messages['messages.reg_pending_title']}" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/close.gif" styleClass="closeModalPanel"
+					id="hidePendingLink" />
+				<rich:componentControl for="regPending" attachTo="hidePendingLink"
+					operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form>
+			<div class="form-div">
+			<div class="form-text-message-top"><h:outputFormat
+				value="#{messages['messages.reg_pending']}" escape="false">
+				<f:param value="#{inactiveNewUser.userName}" />
+				<f:param value="#{inactiveNewUser.email}" />
+			</h:outputFormat></div>
+			<a4j:commandButton type="button" value="#{messages['messages.ok']}"
+				onclick="#{rich:component('regPending')}.hide()" /></div>
+		</a4j:form>
+	</rich:modalPanel>
+
+</ui:composition>

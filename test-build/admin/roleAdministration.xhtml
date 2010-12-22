@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../layout/template.xhtml">
+
+	<ui:param name="page" value="menuRoleAdministration" />
+	<ui:param name="pageTitle" value="Role Administration" />
+
+	<ui:define name="toolbarButtons">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="2">
+			<h:graphicImage value="/img/plus.png" height="13"
+				style="padding-right:0px;" />
+			<a4j:commandLink id="createRoleButton" value="Create Role"
+				action="#{customRoleAction.createRole}"
+				oncomplete="Richfaces.showModalPanel('createRoleDetailsModalPanel')"
+				reRender="createRoleDetailsModalPanel,createRoleDetails"
+				title="#{messages['openeye.createRole']}"
+				rendered="#{s:hasPermission('seam.role', 'create', null)}" />
+		</h:panelGrid>
+
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<rich:extendedDataTable id="rolesDataTable" var="_role"
+				value="#{identityManager.listRoles()}" sortMode="multi"
+				selectionMode="single" rows="50" rowKeyVar="row"
+				columnClasses="data-table-column" rowClasses="data-table-row"
+				headerClass="data-table-header" styleClass="data-table"
+				style="border-width: 0px!important;">
+				<rich:column label="#{messages['openeye.role']}" id="role"
+					sortBy="#{_role}" sortOrder="ASCENDING" width="20%">
+					<f:facet name="header">#{messages['openeye.role']}</f:facet>
+					<h:outputText value="#{_role}" />
+				</rich:column>
+				<rich:column label="#{messages['openeye.memberOfGroups']}"
+					id="groups" width="50%">
+					<f:facet name="header">#{messages['openeye.memberOfGroups']}</f:facet>
+					<h:outputText value="#{roleSearch.getRoleGroups(_role)}" />
+				</rich:column>
+				<rich:column label="#{messages['openeye.actions']}" id="action"
+					width="25%">
+					<f:facet name="header">#{messages['openeye.actions']}</f:facet>
+					<s:fragment rendered="#{s:hasPermission('seam.role', 'update')}">
+						<a4j:commandLink id="editRole" value="#{messages['openeye.edit']}"
+							action="#{customRoleAction.editRole(_role)}"
+							reRender="editRoleDetails"
+							oncomplete="Richfaces.showModalPanel('editRoleDetailsModalPanel')" />
+					</s:fragment>
+					<rich:spacer width="3px" />
+					<s:fragment rendered="#{s:hasPermission('seam.role', 'delete')}">
+						<a4j:commandLink id="deleteRole"
+							value="#{messages['openeye.delete']}"
+							action="#{customRoleAction.deleteRole(_role)}"
+							reRender="pageContent" conversation="end" />
+					</s:fragment>
+				</rich:column>
+			</rich:extendedDataTable>
+		</h:form>
+		<ui:include src="createRoleForm.xhtml" />
+		<ui:include src="editRoleForm.xhtml" />
+	</ui:define>
+
+</ui:composition>

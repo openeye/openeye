@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.com/products/seam/taglib" contentType="text/html">
+	<html>
+	<head>
+	<ui:include src="../layout/headerTemplate.xhtml" />
+	</head>
+	<body class="yui-skin-sam">
+
+	<div id="top1"><ui:include src="../layout/menu.xhtml" /></div>
+
+	<div id="bottom1"><ui:include
+		src="../layout/footerTemplate.xhtml" /></div>
+
+	<div id="center1"><a4j:outputPanel id="pageContent">
+		<ui:insert name="body" />
+	</a4j:outputPanel></div>
+
+	<script>
+(function() {
+    var Dom = YAHOO.util.Dom,
+        Event = YAHOO.util.Event;
+
+    Event.onDOMReady(function() {
+        var layout = new YAHOO.widget.Layout({
+            units: [
+                { position: 'top', height: 80, body: 'top1', gutter: '0px', collapse: false, resize: false, scroll: null, zIndex: 3  },
+                { position: 'bottom',height: 25, resize: false, body: 'bottom1', gutter: '0px', collapse: false, zIndex: 0 },
+                { position: 'center', body: 'center1', zIndex: 1 }
+            ]
+        });
+        layout.render();
+    });
+})();
+</script>
+
+	</body>
+	</html>
+</f:view>

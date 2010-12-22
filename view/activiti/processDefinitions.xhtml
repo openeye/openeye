@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../layout/template.xhtml">
+
+	<ui:param name="page" value="menuProcessDefitions" />
+	<ui:param name="pageTitle" value="Process Definitions" />
+
+	<ui:define name="toolbarButtons">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="2">
+			<h:graphicImage value="/img/plus.png" height="13"
+				style="padding-right:0px;" />
+			<a4j:commandLink id="createDeploymentLink" value="Create Deployment"
+				reRender="createDeploymentModalPanel"
+				oncomplete="Richfaces.showModalPanel('createDeploymentModalPanel')"
+				conversation="begin" view="/activiti/processDefinitions.xhtml" />
+		</h:panelGrid>
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<rich:contextMenu id="definitionContextMenu" attached="true"
+				attachTo="definitionDataTable" submitMode="ajax">
+				<rich:menuItem ajaxSingle="true"
+					action="#{deleteDeploymentAction.confirm()}"
+					reRender="menuAssignedTasks,menuUnassignedTasks,toolBarStartProcessMenu,pageContent">
+					<h:outputText value="Delete Deployment" />
+				</rich:menuItem>
+			</rich:contextMenu>
+			<rich:extendedDataTable id="definitionDataTable"
+				value="#{processDefinitions}" var="definition" sortMode="multi"
+				selectionMode="single" rows="10" rowKeyVar="row"
+				groupingColumn="definitionName" columnClasses="data-table-column"
+				rowClasses="data-table-row" headerClass="data-table-header"
+				styleClass="data-table" style="border-width: 0px!important;">
+				<rich:column label="deploymentId"
+					sortBy="#{definition.deploymentId}" sortOrder="DESCENDING"
+					width="15%">
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{definition.deploymentId}" />
+				</rich:column>
+				<rich:column label="definitionVersion"
+					sortBy="#{definition.version}" sortOrder="DESCENDING" width="15%">
+					<f:facet name="header">
+						<h:outputText value="Version" />
+					</f:facet>
+					<h:outputText value="#{definition.version}" />
+				</rich:column>
+				<rich:column id="definitionName" label="definitionName"
+					sortBy="#{definition.name}" sortOrder="DESCENDING" width="65%">
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:outputText value="#{definition.name}" />
+				</rich:column>
+				<a4j:support event="onRowClick"
+					eventsQueue="deleteDeploymentQueue">
+					<a4j:actionparam name="deploymentId"
+						assignTo="#{deleteDeploymentAction.deploymentId}"
+						value="#{definition.deploymentId}" />
+				</a4j:support>
+				<a4j:queue name="deleteDeploymentQueue" requestDelay="0"
+					ignoreDupResponses="true" disabled="false" size="1"
+					sizeExceededBehavior="dropNew" />
+			</rich:extendedDataTable>
+		</h:form>
+		<ui:include src="createDeploymentForm.xhtml" />
+	</ui:define>
+
+</ui:composition>

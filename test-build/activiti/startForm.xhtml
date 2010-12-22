@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:activiti="http://org.openeye/activiti"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:modalPanel id="startFormModalPanel" domElementAttachment="form"
+		resizeable="false" autosized="true" zindex="2000" minWidth="355"
+		minHeight="100">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText
+					value="#{messages['openeye.new']} #{startProcessForm.name}" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage id="hideStartFormModalPanel" value="/img/close.gif"
+					styleClass="close-modal-panel">
+					<s:conversationPropagation type="end" />
+				</h:graphicImage>
+				<rich:componentControl for="startFormModalPanel"
+					attachTo="hideStartFormModalPanel" operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form id="startFormPanelContent" ajaxSubmit="true"
+			reRender="messages,spinner,taskCounters,unassignedTasks,assignedTasks"
+			oncomplete="if (document.getElementById('jsfMsgMaxSev').value != '2') #{rich:component('startFormModalPanel')}.hide()">
+			<div class="form-div"><span class="form-fields"> <h:panelGroup
+				rendered="#{not empty startProcessForm}">
+				<ui:param name="var" value="#{startProcessForm.variables}" />
+				<activiti:includeTaskForm formId="#{startProcessForm.id}"
+					form="#{startProcessForm.form}" />
+			</h:panelGroup> </span>
+			<div class="form-error-message"><rich:messages level="ERROR"
+				globalOnly="false" styleClass="message" infoClass="infomsg"
+				errorClass="errormsg" /></div>
+			<a4j:commandButton action="#{startProcessAction.confirm()}"
+				value="Start"
+				oncomplete="#{rich:component('startFormModalPanel')}.hide()"
+				reRender="messages,spinner,taskCounters,unassignedTasks,assignedTasks" />
+			<a4j:commandButton value="Cancel"
+				action="#{startProcessAction.cancel()}"
+				oncomplete="#{rich:component('startFormModalPanel')}.hide()"
+				reRender="" /></div>
+		</a4j:form>
+	</rich:modalPanel>
+
+</ui:composition>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.com/products/seam/taglib" contentType="text/html">
+	<html>
+	<head>
+	<ui:include src="headerTemplate.xhtml" />
+	</head>
+	<body class="yui-skin-sam login-background">
+	<div id="doc3" class="yui-t7">
+	<div id="hd"></div>
+	<div id="bd">
+	<div class="yui-g">
+	<div><ui:include src="../preferences/registerForm.xhtml" /><ui:include
+		src="../preferences/resetPasswordForm.xhtml" /></div>
+	<div><a4j:outputPanel id="pageContent"><ui:insert name="body" /></a4j:outputPanel><div><a4j:outputPanel
+		ajaxRendered="true">
+		<h:form style="display:none" prependId="false">
+			<h:inputHidden id="jsfMsgMaxSev"
+				value="#{facesContext.maximumSeverity.ordinal}" />
+		</h:form>
+	</a4j:outputPanel></div></div>
+	</div>
+	</div>
+	<div id="ft"></div> 
+	</div>
+	</body>
+	</html>
+</f:view>
