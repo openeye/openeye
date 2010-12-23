@@ -72,3 +72,20 @@ Change to the Definitions tab and click on the Create Deployment button. Select 
 2.3 Verify
 
 Change to the Tasks tab and click on the New button. Select a process from the drop-down list. Fill in the start form and start the process. A new task should now be visible in the Unassigned task list. Right click on the task and select Claim task from the drop-down list. The task should now be moved to the Assigned Tasks list. Select the task to view the associated task form. Fill in the data and click on the Complete button.
+
+3. Limitations
+
+- Only h2 is pre-configured in the setup script. MySQL, Postgres, Oracle and other databases can be configured to work with openeye.
+ 
+- Reporting with Birt is not integrated.
+
+- Signavio's Activiti Modeler is not included in this package.
+
+- Eclipse and Activiti Eclipse Plugin is not included in this package.
+
+- User documentation is not included in this package.
+
+- Spring integration is not configured.
+
+- Resizing and collapsing of the left and right columns is not working properly after completing a task.
+
