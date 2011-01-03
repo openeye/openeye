@@ -1,4 +1,3 @@
-
 OpenEye - Business Process Management Integration Platform
 ==========================================================
 version 2.0.0.Alpha1, December 2010
@@ -37,7 +36,8 @@ Here follows instructions on how to setup, build and run Open Eye from the sourc
 
 1.1 Download
 
-The source files can be downloaded from github located at the following url: git@github.com:openeye/openeye.git. The runtime environment can be downloaded from sourceforge located at the following url: http://sourceforge.net/projects/open-eye/files/openeye-server/releases/OpenEye-2.0.X.zip
+The source files can be downloaded from github located at the following url: git@github.com:openeye/openeye.git. The runtime environment (OpenEye-2.0.X.zip) can be downloaded from sourceforge located at the following url:
+http://sourceforge.net/projects/open-eye/files/openeye-server/releases/
 
 1.2 Tools
 
